@@ -71,6 +71,7 @@
         .banner-bg {
             position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
             background-position: center; background-size: cover;
+            /* หายใจอย่างเดียว ลื่นไหล ไม่สะดุดตอนเลื่อนจอแล้ว */
             animation: breathBanner 10s ease-in-out infinite alternate;
         }
         @keyframes breathBanner { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
@@ -109,13 +110,16 @@
         @keyframes shimmerTitle { to { background-position: 200% center; } }
         .subtitle { font-size: 15px; color: #8a63a8; margin-bottom: 30px; letter-spacing: 1px; font-weight: 400; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
 
-        /* ================= ปุ่มคริสตัลดั้งเดิม ================= */
-        .links-container { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 5; }
+        /* ================= ปุ่มคริสตัลดั้งเดิม (ย่อขนาดลงนิดเดียว) ================= */
+        .links-container { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 5; }
         .link-btn {
             display: flex; align-items: center; justify-content: center;
             background: rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.9); padding: 18px 20px; border-radius: 35px;
-            color: #5f337c; text-decoration: none; font-size: 16px; font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.9); 
+            padding: 15px 20px; /* ปรับเล็กลงนิดหน่อย */
+            border-radius: 35px;
+            color: #5f337c; text-decoration: none; font-size: 15px; /* ปรับฟอนต์เล็กลงนิดหน่อย */
+            font-weight: 600;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 8px 20px rgba(160, 32, 240, 0.1), inset 0 0 15px rgba(255,255,255,0.8);
             position: relative; overflow: hidden; animation: breathing 4s infinite ease-in-out alternate;
@@ -134,16 +138,20 @@
         .link-btn:nth-child(even) { animation-delay: 1s; } .link-btn:nth-child(3n) { animation-delay: 2s; }
         @keyframes breathing { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
 
-        /* ================= หน้าโหลดมินิมอลเทพนิยาย ================= */
+        /* ================= หน้าโหลดสัมผัสเพื่อเปิดประตู ================= */
         #loadingScreen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fcf9ff;
-            z-index: 9999; display: flex; justify-content: center; align-items: center;
-            transition: opacity 1.5s ease;
+            z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 1.5s ease; cursor: pointer;
         }
         .loading-text {
             color: #7b4397; font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 2px;
             animation: breatheText 2.5s infinite alternate ease-in-out;
-            text-shadow: 0 0 15px rgba(216, 184, 235, 0.8);
+            text-shadow: 0 0 15px rgba(216, 184, 235, 0.8); margin-bottom: 5px;
+        }
+        .loading-subtext {
+            color: #8a63a8; font-family: 'Prompt', sans-serif; font-size: 13px; font-weight: 300;
+            animation: breatheText 2.5s infinite alternate ease-in-out; animation-delay: 0.5s;
         }
         @keyframes breatheText { 0% { opacity: 0.3; filter: blur(2px); } 100% { opacity: 1; filter: blur(0px); } }
 
@@ -187,9 +195,10 @@
 <body>
     <div class="bg-gradient"></div>
 
-    <!-- หน้าจอโหลดคลีนๆ -->
+    <!-- หน้าจอโหลดสัมผัสเพื่อเปิดประตู (ช่วยให้เล่นเพลงอัตโนมัติได้ 100%) -->
     <div id="loadingScreen">
         <p class="loading-text">May the stars guide you...</p>
+        <p class="loading-subtext">สัมผัสเบาๆ เพื่อเปิดประตูสู่ดินแดนสวรรค์..</p>
     </div>
 
     <!-- แคนวาสดาวตกและละอองดาว -->
@@ -246,8 +255,8 @@
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(800 + Math.random() * 400, audioCtx.currentTime); // เสียงวิ้งแหลมใส
-                    gain.gain.setValueAtTime(0.02, audioCtx.currentTime); // เบามากๆ ไม่กวนหู
+                    osc.frequency.setValueAtTime(800 + Math.random() * 400, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.02, audioCtx.currentTime); 
                     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
                     osc.connect(gain); gain.connect(audioCtx.destination);
                     osc.start(); osc.stop(audioCtx.currentTime + 1);
@@ -272,7 +281,6 @@
                     const linkData = currentData.links[key];
                     const a = document.createElement('a');
                     a.href = linkData.url; a.className = 'link-btn'; a.innerText = linkData.text;
-                    // เพิ่มเสียงกระดิ่งเวลาเอาเมาส์ชี้หรือแตะ
                     a.addEventListener('mouseenter', playFairyChime);
                     a.addEventListener('touchstart', playFairyChime, {passive: true});
                     linksContainer.appendChild(a);
@@ -284,26 +292,31 @@
             const bgMusic = document.getElementById('bgMusic');
             document.getElementById('musicSource').src = currentData.musicFile;
             bgMusic.load(); let musicPlayed = false;
+            
             function playMagicMusic() {
                 if (!musicPlayed) { bgMusic.volume = 0.4; bgMusic.play().then(() => { musicPlayed = true; }).catch(e => {}); }
             }
-            window.addEventListener('touchstart', playMagicMusic, { once: true });
-            window.addEventListener('click', playMagicMusic, { once: true });
-            window.addEventListener('scroll', playMagicMusic, { once: true });
 
-            // อนิเมชั่นหน้าจอโหลดสไตล์คลีน
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const loader = document.getElementById('loadingScreen');
-                    loader.style.opacity = '0';
-                    setTimeout(() => { 
-                        loader.style.display = 'none'; 
-                        document.getElementById('mainContainer').classList.add('loaded');
-                    }, 1500);
-                }, 2000); // โชว์ข้อความ 2 วินาทีแล้วเฟดออก
-            });
+            // ระบบเปิดประตูสู่ดินแดนสวรรค์ (แตะเพื่อโหลดและเล่นเพลง)
+            const loader = document.getElementById('loadingScreen');
+            function unlockRealm() {
+                playMagicMusic();
+                // ปลุกระบบเสียงกระดิ่งรอไว้เลย
+                try {
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                } catch(e) {}
 
-            // ================= ระบบแคนวาสเวทมนตร์ (ดาวตก & ละอองดาว) =================
+                loader.style.opacity = '0';
+                setTimeout(() => { 
+                    loader.style.display = 'none'; 
+                    document.getElementById('mainContainer').classList.add('loaded');
+                }, 1500);
+            }
+            loader.addEventListener('click', unlockRealm);
+            loader.addEventListener('touchstart', unlockRealm, {passive: true});
+
+            // ================= ระบบแคนวาสเวทมนตร์ =================
             const canvas = document.getElementById('stardustCanvas'); 
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
@@ -325,41 +338,40 @@
             }
 
             function spawnStardust() {
-                if(particles.length < 40 && Math.random() < 0.05) { // ลดความหนาแน่นลง ให้ดูคลีน
+                if(particles.length < 40 && Math.random() < 0.05) { 
                     const isStar = Math.random() > 0.6; 
                     particles.push({ 
                         x: Math.random() * canvas.width, 
                         y: Math.random() * canvas.height, 
                         size: isStar ? Math.random() * 2 + 1.5 : Math.random() * 1.5 + 0.5, 
-                        speedX: (Math.random() - 0.5) * 0.2, // ขยับซ้ายขวานิดเดียว
-                        speedY: (Math.random() - 0.5) * 0.2, // ขยับขึ้นลงนิดเดียว (เอื่อยๆ)
+                        speedX: (Math.random() - 0.5) * 0.2, 
+                        speedY: (Math.random() - 0.5) * 0.2, 
                         life: 0,
                         maxLife: Math.random() * 0.4 + 0.2,
-                        fadeSpeed: 0.002 + Math.random() * 0.003, // สว่าง/จาง ช้ามากๆ
+                        fadeSpeed: 0.002 + Math.random() * 0.003, 
                         isStar: isStar,
                         fading: false
                     });
                 }
             }
 
-            // ละอองดาวเวลาเอานิ้วลาก (จากโค้ดเดิม)
+            // ละอองดาวเวลาเอานิ้วลาก
             function handleInteraction(e) {
                 let x = e.touches ? e.touches[0].clientX : e.clientX; let y = e.touches ? e.touches[0].clientY : e.clientY;
                 particles.push({ x: x, y: y, size: Math.random() * 2 + 1, speedX: (Math.random() - 0.5) * 1, speedY: (Math.random() - 0.5) * 1, life: 1, maxLife: 1, fadeSpeed: 0.015, isStar: false, fading: true });
             }
             window.addEventListener('mousemove', handleInteraction); window.addEventListener('touchmove', handleInteraction, {passive: true});
 
-            // 2. ดาวตกแห่งความโชคดี (Lucky Shooting Star)
+            // 2. ดาวตกแห่งความโชคดี (ปรับใหญ่และสว่างขึ้นแล้ว)
             let shootingStar = null;
             function spawnShootingStar() {
-                // สุ่มเกิดเรื่อยๆ
                 if (Math.random() < 0.002 && !shootingStar) { 
                     shootingStar = {
                         x: Math.random() * canvas.width,
                         y: 0,
-                        length: Math.random() * 60 + 40,
-                        speed: Math.random() * 10 + 15, // วิ่งเร็ว
-                        angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1), // เฉียงลงขวา
+                        length: Math.random() * 80 + 60, // ปรับหางยาวขึ้น
+                        speed: Math.random() * 12 + 15,
+                        angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1),
                         opacity: 1
                     };
                 }
@@ -374,16 +386,21 @@
                 ctx.moveTo(shootingStar.x, shootingStar.y);
                 ctx.lineTo(endX, endY);
                 
-                // หัวดาวตกสว่าง หางจางหาย
                 let grad = ctx.createLinearGradient(shootingStar.x, shootingStar.y, endX, endY);
                 grad.addColorStop(0, `rgba(255, 255, 255, ${shootingStar.opacity})`);
                 grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
                 
-                ctx.strokeStyle = grad; ctx.lineWidth = 1.5; ctx.shadowColor = "#fff"; ctx.shadowBlur = 5; ctx.stroke(); ctx.restore();
+                ctx.strokeStyle = grad; 
+                ctx.lineWidth = 2.5; // ปรับเส้นหนาขึ้น
+                ctx.shadowColor = "#ffffff"; 
+                ctx.shadowBlur = 12; // ปรับออร่าสว่างขึ้น
+                ctx.lineCap = "round";
+                ctx.stroke(); 
+                ctx.restore();
 
                 shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
                 shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
-                shootingStar.opacity -= 0.012; // ค่อยๆ จางลงระหว่างตก
+                shootingStar.opacity -= 0.012; 
                 if (shootingStar.opacity <= 0 || shootingStar.y > canvas.height) shootingStar = null;
             }
 
@@ -416,10 +433,6 @@
                 requestAnimationFrame(animateMagic);
             }
             animateMagic();
-
-            // Parallax Banner
-            const bannerBg = document.getElementById('bannerBg');
-            window.addEventListener('scroll', () => { bannerBg.style.transform = `translateY(${window.scrollY * 0.25}px) scale(1.05)`; }, {passive: true});
 
             // ================= ปลดล็อกระบบลับ (วาดเลข 8) =================
             let tapCount = 0;

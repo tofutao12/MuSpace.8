@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ahtao Muspace</title>
-    
-    <!-- ================= ป้ายเวทมนตร์ระบุพิกัดรูปภาพแบบเต็มสูบ (บังคับให้แอปดึงรูป) ================= -->
+
     <meta property="og:site_name" content="Ahtao Muspace">
     <meta property="og:title" content="Ahtao Muspace ✨">
     <meta property="og:description" content="ผู้เปิดประตูสู่พรสวรรค์และความโชคดี">
@@ -22,7 +21,7 @@
     <meta name="twitter:image" content="https://ahtaomu8.pages.dev/logo.jpg">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
-    
+
     <script>
         const defaultWebConfig = {
             profileImage: "logo.jpg", 
@@ -42,7 +41,7 @@
             }
         };
     </script>
-    
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body {
@@ -52,7 +51,7 @@
             min-height: 100vh; display: flex; justify-content: center;
             overflow-x: hidden; overscroll-behavior-y: none;
         }
-        
+
         .bg-gradient {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(135deg, #f3e6ff, #e2c2f0, #fcf9ff, #e8d0f5);
@@ -69,7 +68,7 @@
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 0 50px rgba(180, 140, 220, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            
+
             will-change: transform, opacity;
             transform: translateY(20px); opacity: 0;
             transition: opacity 2.5s ease-in-out, transform 2.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -89,7 +88,7 @@
             will-change: transform;
         }
         @keyframes breathBanner { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
-        
+
         .magic-orb {
             position: absolute; border-radius: 50%; background: white;
             box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.8);
@@ -151,17 +150,17 @@
 
         #loadingScreen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fcf9ff;
-            z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 1s ease; cursor: pointer;
+            z-index: 99999; display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 1s ease; cursor: pointer; pointer-events: auto;
         }
         .loading-text {
             color: #7b4397; font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 2px;
             animation: breatheText 2.5s infinite alternate ease-in-out;
-            text-shadow: 0 0 15px rgba(216, 184, 235, 0.8); margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(216, 184, 235, 0.8); margin-bottom: 10px; pointer-events: none;
         }
         .loading-subtext {
             color: #8a63a8; font-family: 'Prompt', sans-serif; font-size: 13px; font-weight: 300;
-            animation: breatheText 2.5s infinite alternate ease-in-out; animation-delay: 0.5s;
+            animation: breatheText 2.5s infinite alternate ease-in-out; animation-delay: 0.5s; pointer-events: none;
         }
         @keyframes breatheText { 0% { opacity: 0.3; filter: blur(2px); } 100% { opacity: 1; filter: blur(0px); } }
 
@@ -203,6 +202,7 @@
 <body>
     <div class="bg-gradient"></div>
 
+    <!-- หน้าจอโหลด ปลดล็อกคำสั่งคลิกตรงนี้ -->
     <div id="loadingScreen">
         <p class="loading-text">May the stars guide you...</p>
         <p class="loading-subtext">สัมผัสเบาๆ เพื่อเปิดประตูสู่ดินแดนสวรรค์..</p>
@@ -251,8 +251,36 @@
     </div>
 
     <script>
+        // ประกาศฟังก์ชันเปิดประตูไว้นอกสุด เพื่อให้ปุ่มและเบราว์เซอร์เรียกใช้ได้ทันที
+        let isUnlocked = false;
+        let bgMusic, audioCtx = null;
+
+        function unlockRealm() {
+            if (isUnlocked) return;
+            isUnlocked = true;
+
+            if (bgMusic) {
+                bgMusic.volume = 0.4;
+                bgMusic.play().catch(err => { bgMusic.play(); });
+            }
+
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+            } catch(e) {}
+
+            const loader = document.getElementById('loadingScreen');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { if(typeof spawnMeteorShower === 'function') spawnMeteorShower(); }, 100);
+                setTimeout(() => { 
+                    loader.style.display = 'none'; 
+                    document.getElementById('mainContainer').classList.add('loaded');
+                }, 1200);
+            }
+        }
+
         try {
-            let audioCtx = null;
             function playFairyChime() {
                 try {
                     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -294,13 +322,9 @@
             }
             renderSite();
 
-            const bgMusic = document.getElementById('bgMusic');
+            bgMusic = document.getElementById('bgMusic');
             document.getElementById('musicSource').src = currentData.musicFile;
-            bgMusic.load(); let musicPlayed = false;
-            
-            function playMagicMusic() {
-                if (!musicPlayed) { bgMusic.volume = 0.4; bgMusic.play().then(() => { musicPlayed = true; }).catch(e => {}); }
-            }
+            bgMusic.load();
 
             const canvas = document.getElementById('stardustCanvas'); 
             const ctx = canvas.getContext('2d');
@@ -311,23 +335,12 @@
             let shootingStars = []; 
 
             const loader = document.getElementById('loadingScreen');
-            function unlockRealm() {
-                playMagicMusic();
-                try {
-                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    if (audioCtx.state === 'suspended') audioCtx.resume();
-                } catch(e) {}
-
-                loader.style.opacity = '0';
-                setTimeout(() => { spawnMeteorShower(); }, 100);
-
-                setTimeout(() => { 
-                    loader.style.display = 'none'; 
-                    document.getElementById('mainContainer').classList.add('loaded');
-                }, 1200);
-            }
-            loader.addEventListener('click', unlockRealm, { once: true });
-            loader.addEventListener('touchstart', unlockRealm, { once: true, passive: true });
+            // ผูก Event ทั้ง Click และ Touch ให้กดติดชัวร์ทุกอุปกรณ์
+            loader.addEventListener('click', unlockRealm);
+            loader.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                unlockRealm();
+            }, { passive: false });
 
             function drawCrossStar(x, y, size, alpha) {
                 ctx.save(); ctx.translate(x, y);
@@ -357,7 +370,7 @@
             }
             window.addEventListener('mousemove', handleInteraction); window.addEventListener('touchmove', handleInteraction, {passive: true});
 
-            function spawnMeteorShower() {
+            window.spawnMeteorShower = function() {
                 let showerCount = 18; 
                 for(let i=0; i<showerCount; i++) {
                     setTimeout(() => {
@@ -512,7 +525,7 @@
 
             window.saveAdminData = function() {
                 currentData.profileImage = document.getElementById('adminProfImg').value;
-                currentData.bannerImage = document.getElementById('adminBanImg'].value;
+                currentData.bannerImage = document.getElementById('adminBanImg').value;
                 currentData.siteTitle = document.getElementById('adminTitle').value;
                 currentData.siteSubtitle = document.getElementById('adminSubtitle').value;
                 for (const key in currentData.links) {

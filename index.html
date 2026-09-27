@@ -1,1 +1,364 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ahtao Muspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        // ================= CONFIGURATION (ตั้งค่าเริ่มต้นที่นี่ได้เลย) =================
+        const defaultWebConfig = {
+            profileImage: "download (73).jpg", 
+            bannerImage: "image_fbf15a.jpg",  
+            musicFile: "wings_of_gold.mp3",   
+            
+            siteTitle: "Ahtao Muspace",
+            siteSubtitle: "✨ ผู้เปิดประตูสู่พรสวรรค์และความโชคดี ✨",
 
+            links: {
+                tarot: { text: "🔮 เปิดไพ่ดูดวง", url: "#" },
+                reviews: { text: "📜 รีวิวจากลูกค้า", url: "#" },
+                discord: { text: "🎧 Discord", url: "#" },
+                facebook: { text: "📘 Facebook", url: "#" },
+                line: { text: "💬 LINE Official", url: "#" },
+                instagram: { text: "📸 Instagram", url: "#" }
+            }
+        };
+    </script>
+    
+    <style>
+        /* ================= ดีไซน์หลัก (Core Styles) ================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Prompt', sans-serif; background: #11081f; color: #fff;
+            min-height: 100vh; display: flex; justify-content: center;
+            overflow-x: hidden; overscroll-behavior-y: none;
+        }
+        
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #2a164b, #5f337c, #2a164b);
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite; z-index: -2;
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        #stardustCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 100; }
+
+        .container {
+            width: 100%; max-width: 480px; padding: 20px; text-align: center;
+            position: relative; z-index: 1; min-height: 100vh;
+            background: rgba(20, 10, 35, 0.4); backdrop-filter: blur(5px);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            opacity: 0; transition: opacity 1.5s ease-in-out;
+        }
+
+        /* ================= แบนเนอร์มีชีวิต ================= */
+        .banner {
+            width: 100%; height: 220px; border-radius: 20px; margin-bottom: -65px;
+            box-shadow: 0 10px 30px rgba(200, 162, 200, 0.3); border: 2px solid rgba(255, 255, 255, 0.15);
+            position: relative; overflow: hidden; transform: translateZ(0);
+        }
+        .banner-bg {
+            position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
+            background-position: center; background-size: cover;
+            filter: brightness(0.95); transition: transform 0.1s linear;
+        }
+        .butterfly {
+            position: absolute; font-size: 24px; filter: drop-shadow(0 0 8px gold);
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); cursor: default;
+            animation: floatB 6s ease-in-out infinite alternate;
+        }
+        .b1 { top: 15%; left: 10%; animation-delay: 0s; font-size: 20px; }
+        .b2 { top: 30%; right: 15%; animation-delay: 1s; font-size: 26px; }
+        .b3 { top: 60%; left: 20%; animation-delay: 2s; font-size: 22px; }
+        .b4 { top: 50%; right: 25%; animation-delay: 1.5s; font-size: 18px; }
+        @keyframes floatB { 0% { transform: translateY(0) rotate(-10deg); } 100% { transform: translateY(-20px) rotate(15deg); } }
+
+        /* ================= โปรไฟล์ & ข้อความ ================= */
+        .profile-img {
+            width: 140px; height: 140px; border-radius: 50%; border: 4px solid #e2c2f0;
+            object-fit: cover; position: relative; z-index: 5;
+            box-shadow: 0 0 30px #a020f0, inset 0 0 20px rgba(255,255,255,0.5);
+            cursor: pointer; transition: transform 0.3s;
+        }
+        .profile-img:active { transform: scale(0.95); }
+        .title { font-family: 'Cinzel', serif; font-size: 32px; margin-top: 15px; color: #f7e6ff; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
+        .subtitle { font-size: 14px; color: #d8b8eb; margin-bottom: 30px; letter-spacing: 1px; }
+
+        /* ================= ปุ่มคริสตัลหายใจ ================= */
+        .links-container { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 5; }
+        .link-btn {
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+            border: 1px solid rgba(226, 194, 240, 0.4); padding: 16px 20px; border-radius: 30px;
+            color: #fff; text-decoration: none; font-size: 16px; font-weight: 600;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.1);
+            position: relative; overflow: hidden; animation: breathing 4s infinite ease-in-out alternate;
+        }
+        .link-btn::after {
+            content: ''; position: absolute; top: -50%; left: -100%;
+            width: 50%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-30deg); transition: 0.6s ease;
+        }
+        .link-btn:hover::after { left: 150%; }
+        .link-btn:hover { border-color: #fff; box-shadow: 0 0 25px rgba(226, 194, 240, 0.8); transform: translateY(-3px) scale(1.02); }
+        .link-btn:nth-child(even) { animation-delay: 1s; } .link-btn:nth-child(3n) { animation-delay: 2s; }
+        @keyframes breathing { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+
+        /* ================= Loading Screen ================= */
+        #loadingScreen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0f0518;
+            z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        .magic-circle {
+            width: 100px; height: 100px; border: 4px dashed #d8b8eb; border-radius: 50%;
+            animation: spin 3s linear infinite; box-shadow: 0 0 30px #a020f0;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* ================= ระบบวาดเวทมนตร์ (Gesture Lock) ================= */
+        #gestureOverlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 2, 20, 0.95);
+            z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.5s;
+        }
+        #gestureOverlay h2 { color: #f7e6ff; font-family: 'Cinzel'; margin-bottom: 20px; text-shadow: 0 0 10px #a020f0; }
+        #drawCanvas { border: 2px solid rgba(226, 194, 240, 0.3); border-radius: 20px; box-shadow: 0 0 30px rgba(160,32,240,0.4); background: rgba(0,0,0,0.5); cursor: crosshair; touch-action: none; }
+
+        /* ================= Admin Panel ================= */
+        #adminPanel {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px;
+            opacity: 0; transition: opacity 0.5s;
+        }
+        .admin-box {
+            background: url('https://www.transparenttextures.com/patterns/black-scales.png'), linear-gradient(135deg, #30104a, #1a082e);
+            width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; border: 3px solid #d8b8eb;
+            max-height: 90vh; overflow-y: auto; text-align: left; box-shadow: 0 0 50px rgba(216, 184, 235, 0.5);
+        }
+        .admin-box h2 { color: #f7e6ff; text-align: center; margin-bottom: 15px; border-bottom: 1px solid #d8b8eb; padding-bottom: 10px; }
+        .admin-group { margin-bottom: 12px; }
+        .admin-group label { display: block; font-size: 13px; color: #e2c2f0; margin-bottom: 4px; }
+        .admin-group input {
+            width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #a020f0; background: rgba(0,0,0,0.5);
+            color: #fff; font-family: 'Prompt'; outline: none; transition: 0.3s;
+        }
+        .admin-group input:focus { border-color: #f7e6ff; box-shadow: 0 0 10px #a020f0; }
+        .admin-btn {
+            width: 100%; padding: 12px; background: linear-gradient(90deg, #8a1bc2, #a020f0); color: white;
+            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s;
+        }
+        .admin-btn:hover { background: #d8b8eb; color: #30104a; }
+        .admin-btn.close-btn { background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <div id="loadingScreen">
+        <div class="magic-circle"></div>
+        <p style="color: #d8b8eb; margin-top: 20px; font-family: 'Cinzel';">Summoning Magic...</p>
+    </div>
+
+    <canvas id="stardustCanvas"></canvas>
+
+    <div class="container" id="mainContainer">
+        <div class="banner">
+            <div class="banner-bg" id="bannerBg"></div>
+            <div class="butterfly b1" id="bf1">🦋</div>
+            <div class="butterfly b2" id="bf2">🦋</div>
+            <div class="butterfly b3" id="bf3">🦋</div>
+            <div class="butterfly b4" id="bf4">🦋</div>
+        </div>
+        
+        <img src="" alt="Profile" class="profile-img" id="profileImg">
+        
+        <h1 class="title" id="siteTitle">Title</h1>
+        <p class="subtitle" id="siteSubtitle">Subtitle</p>
+
+        <div class="links-container" id="linksContainer"></div>
+
+        <audio id="bgMusic" loop>
+            <source src="" type="audio/mpeg" id="musicSource">
+        </audio>
+    </div>
+
+    <div id="gestureOverlay">
+        <h2>Draw Infinity (8) to Unlock</h2>
+        <canvas id="drawCanvas" width="300" height="300"></canvas>
+        <button class="admin-btn close-btn" style="max-width: 300px; margin-top:20px;" onclick="closeGesture()">Cancel Spell</button>
+    </div>
+
+    <div id="adminPanel">
+        <div class="admin-box">
+            <h2>📖 The Secret Grimoire</h2>
+            <div class="admin-group"><label>Profile Image Name</label><input type="text" id="adminProfImg"></div>
+            <div class="admin-group"><label>Banner Image Name</label><input type="text" id="adminBanImg"></div>
+            <div class="admin-group"><label>Title</label><input type="text" id="adminTitle"></div>
+            <div class="admin-group"><label>Subtitle</label><input type="text" id="adminSubtitle"></div>
+            <h3 style="color:#d8b8eb; font-size:14px; margin: 15px 0 5px;">🔗 Links Settings</h3>
+            <div id="adminLinksArea"></div>
+            <button class="admin-btn" onclick="saveAdminData()">💾 บันทึกเวทมนตร์ (Save Config)</button>
+            <button class="admin-btn close-btn" onclick="closeAdmin()">❌ ปิดตำรา</button>
+        </div>
+    </div>
+
+    <script>
+        try {
+            let currentData = defaultWebConfig;
+            if (localStorage.getItem('ahtao_magic_data')) { currentData = JSON.parse(localStorage.getItem('ahtao_magic_data')); }
+
+            function renderSite() {
+                document.getElementById('profileImg').src = currentData.profileImage;
+                document.getElementById('bannerBg').style.backgroundImage = `url('${currentData.bannerImage}')`;
+                document.getElementById('siteTitle').innerText = currentData.siteTitle;
+                document.getElementById('siteSubtitle').innerText = currentData.siteSubtitle;
+                
+                const linksContainer = document.getElementById('linksContainer');
+                linksContainer.innerHTML = ''; 
+                for (const key in currentData.links) {
+                    const linkData = currentData.links[key];
+                    const a = document.createElement('a');
+                    a.href = linkData.url; a.className = 'link-btn'; a.innerText = linkData.text;
+                    linksContainer.appendChild(a);
+                }
+            }
+            renderSite();
+
+            const bgMusic = document.getElementById('bgMusic');
+            document.getElementById('musicSource').src = currentData.musicFile;
+            bgMusic.load(); let musicPlayed = false;
+            
+            function playMagicMusic() {
+                if (!musicPlayed) { bgMusic.volume = 0.5; bgMusic.play().then(() => { musicPlayed = true; }).catch(e => {}); }
+            }
+            window.addEventListener('touchstart', playMagicMusic, { once: true });
+            window.addEventListener('click', playMagicMusic, { once: true });
+            window.addEventListener('scroll', playMagicMusic, { once: true });
+
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.opacity = '0';
+                    setTimeout(() => { 
+                        document.getElementById('loadingScreen').style.display = 'none'; 
+                        document.getElementById('mainContainer').style.opacity = '1';
+                    }, 1000);
+                }, 1000);
+            });
+
+            const canvas = document.getElementById('stardustCanvas'); const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight; let particles = [];
+            window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+            function addParticle(x, y) {
+                particles.push({ x: x, y: y, size: Math.random() * 3 + 1, speedX: (Math.random() - 0.5) * 2, speedY: (Math.random() - 0.5) * 2, life: 1 });
+            }
+            function handleInteraction(e) {
+                let x = e.touches ? e.touches[0].clientX : e.clientX; let y = e.touches ? e.touches[0].clientY : e.clientY;
+                for(let i=0; i<3; i++) addParticle(x, y);
+            }
+            window.addEventListener('mousemove', handleInteraction); window.addEventListener('touchmove', handleInteraction);
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    let p = particles[i];
+                    ctx.fillStyle = `rgba(226, 194, 240, ${p.life})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+                    p.x += p.speedX; p.y += p.speedY; p.life -= 0.02;
+                }
+                particles = particles.filter(p => p.life > 0); requestAnimationFrame(drawParticles);
+            }
+            drawParticles();
+
+            const bannerBg = document.getElementById('bannerBg');
+            const butterflies = [document.getElementById('bf1'), document.getElementById('bf2'), document.getElementById('bf3'), document.getElementById('bf4')];
+            window.addEventListener('scroll', () => { bannerBg.style.transform = `translateY(${window.scrollY * 0.3}px)`; });
+            window.addEventListener('mousemove', (e) => {
+                butterflies.forEach(bf => {
+                    let rect = bf.getBoundingClientRect(); let bfX = rect.left + rect.width / 2; let bfY = rect.top + rect.height / 2;
+                    let dist = Math.hypot(e.clientX - bfX, e.clientY - bfY);
+                    if (dist < 100) {
+                        let angle = Math.atan2(bfY - e.clientY, bfX - e.clientX);
+                        bf.style.transform = `translate(${Math.cos(angle)*30}px, ${Math.sin(angle)*30}px) scale(1.2)`;
+                    } else { bf.style.transform = ''; }
+                });
+            });
+
+            let tapCount = 0;
+            document.getElementById('profileImg').addEventListener('click', () => {
+                tapCount++; if (tapCount === 2) { openGesture(); tapCount = 0; }
+                setTimeout(() => { tapCount = 0; }, 1000);
+            });
+
+            const gestureOverlay = document.getElementById('gestureOverlay');
+            const dCanvas = document.getElementById('drawCanvas'); const dCtx = dCanvas.getContext('2d');
+            let isDrawing = false; let pathLength = 0; let lastPos = {x:0, y:0};
+
+            function openGesture() {
+                gestureOverlay.style.display = 'flex'; setTimeout(() => { gestureOverlay.style.opacity = '1'; }, 50);
+                dCtx.clearRect(0, 0, dCanvas.width, dCanvas.height); pathLength = 0;
+                dCtx.lineWidth = 10; dCtx.strokeStyle = "rgba(255,255,255,0.1)"; dCtx.lineCap = "round";
+                dCtx.beginPath(); dCtx.moveTo(150, 150); dCtx.bezierCurveTo(250, 50, 50, 50, 150, 150); dCtx.bezierCurveTo(250, 250, 50, 250, 150, 150); dCtx.stroke();
+            }
+            function closeGesture() { gestureOverlay.style.opacity = '0'; setTimeout(() => { gestureOverlay.style.display = 'none'; }, 500); }
+
+            function startDraw(e) { 
+                isDrawing = true; let rect = dCanvas.getBoundingClientRect();
+                lastPos = { x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top };
+            }
+            function drawMove(e) {
+                if (!isDrawing) return; e.preventDefault(); let rect = dCanvas.getBoundingClientRect();
+                let currentPos = { x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top };
+                dCtx.lineWidth = 5; dCtx.strokeStyle = "#a020f0"; dCtx.shadowColor = "#f7e6ff"; dCtx.shadowBlur = 10;
+                dCtx.beginPath(); dCtx.moveTo(lastPos.x, lastPos.y); dCtx.lineTo(currentPos.x, currentPos.y); dCtx.stroke();
+                pathLength += Math.hypot(currentPos.x - lastPos.x, currentPos.y - lastPos.y); lastPos = currentPos;
+            }
+            function stopDraw() {
+                isDrawing = false;
+                if (pathLength > 300) { closeGesture(); openAdmin(); } else { dCtx.clearRect(0, 0, dCanvas.width, dCanvas.height); openGesture(); }
+            }
+            dCanvas.addEventListener('mousedown', startDraw); dCanvas.addEventListener('mousemove', drawMove); dCanvas.addEventListener('mouseup', stopDraw);
+            dCanvas.addEventListener('touchstart', startDraw, {passive: false}); dCanvas.addEventListener('touchmove', drawMove, {passive: false}); dCanvas.addEventListener('touchend', stopDraw);
+
+            const adminPanel = document.getElementById('adminPanel'); const adminLinksArea = document.getElementById('adminLinksArea');
+
+            function openAdmin() {
+                adminPanel.style.display = 'flex'; setTimeout(() => { adminPanel.style.opacity = '1'; }, 50);
+                document.getElementById('adminProfImg').value = currentData.profileImage;
+                document.getElementById('adminBanImg').value = currentData.bannerImage;
+                document.getElementById('adminTitle').value = currentData.siteTitle;
+                document.getElementById('adminSubtitle').value = currentData.siteSubtitle;
+                
+                adminLinksArea.innerHTML = '';
+                for (const key in currentData.links) {
+                    adminLinksArea.innerHTML += `
+                        <div class="admin-group">
+                            <label>[${key}] Button Text & URL</label>
+                            <input type="text" id="t_${key}" value="${currentData.links[key].text}" style="margin-bottom:5px;">
+                            <input type="text" id="u_${key}" value="${currentData.links[key].url}">
+                        </div>`;
+                }
+            }
+            function closeAdmin() { adminPanel.style.opacity = '0'; setTimeout(() => { adminPanel.style.display = 'none'; }, 500); }
+
+            window.saveAdminData = function() {
+                currentData.profileImage = document.getElementById('adminProfImg').value;
+                currentData.bannerImage = document.getElementById('adminBanImg').value;
+                currentData.siteTitle = document.getElementById('adminTitle').value;
+                currentData.siteSubtitle = document.getElementById('adminSubtitle').value;
+                for (const key in currentData.links) {
+                    currentData.links[key].text = document.getElementById(`t_${key}`).value;
+                    currentData.links[key].url = document.getElementById(`u_${key}`).value;
+                }
+                localStorage.setItem('ahtao_magic_data', JSON.stringify(currentData));
+                renderSite(); closeAdmin(); alert("✨ บันทึกข้อมูลสำเร็จแล้ว!");
+            }
+            window.closeGesture = closeGesture; window.closeAdmin = closeAdmin;
+
+        } catch (error) { console.error("เวทมนตร์ขัดข้อง:", error); }
+    </script>
+</body>
+</html>

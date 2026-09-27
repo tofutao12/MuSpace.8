@@ -48,7 +48,7 @@
         /* แคนวาสเวทมนตร์ (อยู่หลังกระจก) */
         #stardustCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; }
 
-        /* ================= กระจกฝ้าเวทมนตร์ ================= */
+        /* ================= กระจกฝ้าเวทมนตร์ (เปิดโหมดเทอร์โบการ์ดจอ) ================= */
         .container {
             width: 100%; max-width: 480px; padding: 20px; text-align: center;
             position: relative; z-index: 1; min-height: 100vh;
@@ -56,8 +56,11 @@
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 0 50px rgba(180, 140, 220, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 2s ease-in-out, transform 2s ease-out;
+            
+            /* คำสั่งเปิดโหมดเทอร์โบให้การ์ดจอมือถือ (ลดการกระตุก) */
+            will-change: transform, opacity;
+            transform: translateY(20px); opacity: 0;
+            transition: opacity 2.5s ease-in-out, transform 2.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .container.loaded { opacity: 1; transform: translateY(0); }
 
@@ -73,6 +76,7 @@
             background-position: center; background-size: cover;
             /* หายใจอย่างเดียว ลื่นไหล ไม่สะดุดตอนเลื่อนจอแล้ว */
             animation: breathBanner 10s ease-in-out infinite alternate;
+            will-change: transform;
         }
         @keyframes breathBanner { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
         
@@ -116,9 +120,9 @@
             display: flex; align-items: center; justify-content: center;
             background: rgba(255, 255, 255, 0.6);
             border: 2px solid rgba(255, 255, 255, 0.9); 
-            padding: 15px 20px; /* ปรับเล็กลงนิดหน่อย */
+            padding: 15px 20px; 
             border-radius: 35px;
-            color: #5f337c; text-decoration: none; font-size: 15px; /* ปรับฟอนต์เล็กลงนิดหน่อย */
+            color: #5f337c; text-decoration: none; font-size: 15px; 
             font-weight: 600;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 8px 20px rgba(160, 32, 240, 0.1), inset 0 0 15px rgba(255,255,255,0.8);
@@ -142,7 +146,7 @@
         #loadingScreen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fcf9ff;
             z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 1.5s ease; cursor: pointer;
+            transition: opacity 1s ease; cursor: pointer;
         }
         .loading-text {
             color: #7b4397; font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 2px;
@@ -195,7 +199,7 @@
 <body>
     <div class="bg-gradient"></div>
 
-    <!-- หน้าจอโหลดสัมผัสเพื่อเปิดประตู (ช่วยให้เล่นเพลงอัตโนมัติได้ 100%) -->
+    <!-- หน้าจอโหลดสัมผัสเพื่อเปิดประตู -->
     <div id="loadingScreen">
         <p class="loading-text">May the stars guide you...</p>
         <p class="loading-subtext">สัมผัสเบาๆ เพื่อเปิดประตูสู่ดินแดนสวรรค์..</p>
@@ -219,7 +223,8 @@
 
         <div class="links-container" id="linksContainer"></div>
 
-        <audio id="bgMusic" loop>
+        <!-- โหลดไฟล์เพลงล่วงหน้าทันที เพื่อแก้ปัญหาคอขวด (preload="auto") -->
+        <audio id="bgMusic" loop preload="auto">
             <source src="" type="audio/mpeg" id="musicSource">
         </audio>
     </div>
@@ -246,7 +251,7 @@
 
     <script>
         try {
-            // ระบบเสียงกระดิ่งลม (Fairy Chimes) แบบสังเคราะห์เบาๆ
+            // ระบบเสียงกระดิ่งลม (Fairy Chimes)
             let audioCtx = null;
             function playFairyChime() {
                 try {
@@ -297,33 +302,41 @@
                 if (!musicPlayed) { bgMusic.volume = 0.4; bgMusic.play().then(() => { musicPlayed = true; }).catch(e => {}); }
             }
 
-            // ระบบเปิดประตูสู่ดินแดนสวรรค์ (แตะเพื่อโหลดและเล่นเพลง)
-            const loader = document.getElementById('loadingScreen');
-            function unlockRealm() {
-                playMagicMusic();
-                // ปลุกระบบเสียงกระดิ่งรอไว้เลย
-                try {
-                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    if (audioCtx.state === 'suspended') audioCtx.resume();
-                } catch(e) {}
-
-                loader.style.opacity = '0';
-                setTimeout(() => { 
-                    loader.style.display = 'none'; 
-                    document.getElementById('mainContainer').classList.add('loaded');
-                }, 1500);
-            }
-            loader.addEventListener('click', unlockRealm);
-            loader.addEventListener('touchstart', unlockRealm, {passive: true});
-
             // ================= ระบบแคนวาสเวทมนตร์ =================
             const canvas = document.getElementById('stardustCanvas'); 
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
             window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-            // 1. ดาววิบวับลอยเอื่อยๆ (Twinkling Stardust)
             let particles = [];
+            let shootingStar = null;
+
+            // ระบบเปิดประตูสู่ดินแดนสวรรค์ (โหลดและเล่นเพลง + หน่วงเวลาแก้ค้าง)
+            const loader = document.getElementById('loadingScreen');
+            function unlockRealm() {
+                playMagicMusic();
+                try {
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                } catch(e) {}
+
+                // เฟดหน้าจอโหลดออก
+                loader.style.opacity = '0';
+                
+                // ให้เวลาเครื่องประมวลผล 0.3 วิ แล้วยิงดาวตกนำทางแบบสโลว์โมชั่น!
+                setTimeout(() => {
+                    spawnFirstMajesticStar();
+                }, 300);
+
+                // รอ 1.2 วินาที (ให้ดาวตกวิ่งผ่านก่อน) แล้วค่อยแสดงเว็บขึ้นมาแบบสมูทๆ
+                setTimeout(() => { 
+                    loader.style.display = 'none'; 
+                    document.getElementById('mainContainer').classList.add('loaded');
+                }, 1200);
+            }
+            loader.addEventListener('click', unlockRealm, { once: true });
+            loader.addEventListener('touchstart', unlockRealm, { once: true, passive: true });
+
             function drawCrossStar(x, y, size, alpha) {
                 ctx.save(); ctx.translate(x, y);
                 ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
@@ -355,22 +368,32 @@
                 }
             }
 
-            // ละอองดาวเวลาเอานิ้วลาก
             function handleInteraction(e) {
                 let x = e.touches ? e.touches[0].clientX : e.clientX; let y = e.touches ? e.touches[0].clientY : e.clientY;
                 particles.push({ x: x, y: y, size: Math.random() * 2 + 1, speedX: (Math.random() - 0.5) * 1, speedY: (Math.random() - 0.5) * 1, life: 1, maxLife: 1, fadeSpeed: 0.015, isStar: false, fading: true });
             }
             window.addEventListener('mousemove', handleInteraction); window.addEventListener('touchmove', handleInteraction, {passive: true});
 
-            // 2. ดาวตกแห่งความโชคดี (ปรับใหญ่และสว่างขึ้นแล้ว)
-            let shootingStar = null;
+            // ดาวตกนำทางดวงแรก (ช้าและอลังการ)
+            function spawnFirstMajesticStar() {
+                shootingStar = {
+                    x: canvas.width * 0.2 + (Math.random() * 100), // โผล่จากด้านบนค่อนไปทางซ้าย
+                    y: 0,
+                    length: 120, // หางยาวมาก
+                    speed: 7, // ช้ากว่าปกติครึ่งนึง เพื่อให้มองเห็นชัดเจน!
+                    angle: Math.PI / 4 + 0.05,
+                    opacity: 1
+                };
+            }
+
+            // ดาวตกปกติ
             function spawnShootingStar() {
                 if (Math.random() < 0.002 && !shootingStar) { 
                     shootingStar = {
                         x: Math.random() * canvas.width,
                         y: 0,
-                        length: Math.random() * 80 + 60, // ปรับหางยาวขึ้น
-                        speed: Math.random() * 12 + 15,
+                        length: Math.random() * 80 + 60,
+                        speed: Math.random() * 12 + 15, // เร็วปกติ
                         angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1),
                         opacity: 1
                     };
@@ -391,16 +414,16 @@
                 grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
                 
                 ctx.strokeStyle = grad; 
-                ctx.lineWidth = 2.5; // ปรับเส้นหนาขึ้น
+                ctx.lineWidth = 2.5; 
                 ctx.shadowColor = "#ffffff"; 
-                ctx.shadowBlur = 12; // ปรับออร่าสว่างขึ้น
+                ctx.shadowBlur = 12; 
                 ctx.lineCap = "round";
                 ctx.stroke(); 
                 ctx.restore();
 
                 shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
                 shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
-                shootingStar.opacity -= 0.012; 
+                shootingStar.opacity -= 0.01; // จางช้าลงนิดนึง
                 if (shootingStar.opacity <= 0 || shootingStar.y > canvas.height) shootingStar = null;
             }
 
@@ -408,7 +431,10 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
                 spawnStardust();
-                spawnShootingStar();
+                // ดาวตกปกติจะเริ่มทำงานหลังจากเว็บโหลดสมบูรณ์แล้ว
+                if(document.getElementById('mainContainer').classList.contains('loaded')){
+                    spawnShootingStar();
+                }
                 drawShootingStar();
 
                 for (let i = 0; i < particles.length; i++) {

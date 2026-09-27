@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ahtao Muspace</title>
+    
+    <!-- ================= ป้ายเวทมนตร์สำหรับโชว์รูปเวลาแชร์ลิงก์ (Open Graph) ================= -->
+    <meta property="og:title" content="Ahtao Muspace ✨">
+    <meta property="og:description" content="ผู้เปิดประตูสู่พรสวรรค์และความโชคดี">
+    <!-- ดึงรูปโปรไฟล์มาแสดงเวลาแชร์ลิงก์ -->
+    <meta property="og:image" content="https://ahtaomu8.pages.dev/download%20(73).jpg"> 
+    <meta property="og:url" content="https://ahtaomu8.pages.dev/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script>
@@ -57,7 +67,6 @@
             box-shadow: 0 0 50px rgba(180, 140, 220, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.5);
             
-            /* คำสั่งเปิดโหมดเทอร์โบให้การ์ดจอมือถือ (ลดการกระตุก) */
             will-change: transform, opacity;
             transform: translateY(20px); opacity: 0;
             transition: opacity 2.5s ease-in-out, transform 2.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -74,7 +83,6 @@
         .banner-bg {
             position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
             background-position: center; background-size: cover;
-            /* หายใจอย่างเดียว ลื่นไหล ไม่สะดุดตอนเลื่อนจอแล้ว */
             animation: breathBanner 10s ease-in-out infinite alternate;
             will-change: transform;
         }
@@ -114,7 +122,7 @@
         @keyframes shimmerTitle { to { background-position: 200% center; } }
         .subtitle { font-size: 15px; color: #8a63a8; margin-bottom: 30px; letter-spacing: 1px; font-weight: 400; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
 
-        /* ================= ปุ่มคริสตัลดั้งเดิม (ย่อขนาดลงนิดเดียว) ================= */
+        /* ================= ปุ่มคริสตัล ================= */
         .links-container { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 5; }
         .link-btn {
             display: flex; align-items: center; justify-content: center;
@@ -223,7 +231,7 @@
 
         <div class="links-container" id="linksContainer"></div>
 
-        <!-- โหลดไฟล์เพลงล่วงหน้าทันที เพื่อแก้ปัญหาคอขวด (preload="auto") -->
+        <!-- โหลดไฟล์เพลงล่วงหน้าทันที -->
         <audio id="bgMusic" loop preload="auto">
             <source src="" type="audio/mpeg" id="musicSource">
         </audio>
@@ -251,7 +259,6 @@
 
     <script>
         try {
-            // ระบบเสียงกระดิ่งลม (Fairy Chimes)
             let audioCtx = null;
             function playFairyChime() {
                 try {
@@ -268,7 +275,6 @@
                 } catch(e) {}
             }
 
-            // จัดการข้อมูลเว็บไซต์
             let currentData = defaultWebConfig;
             if (localStorage.getItem('ahtao_magic_grimoire_final')) { 
                 currentData = JSON.parse(localStorage.getItem('ahtao_magic_grimoire_final')); 
@@ -293,7 +299,6 @@
             }
             renderSite();
 
-            // เพลงบรรเลง
             const bgMusic = document.getElementById('bgMusic');
             document.getElementById('musicSource').src = currentData.musicFile;
             bgMusic.load(); let musicPlayed = false;
@@ -302,7 +307,6 @@
                 if (!musicPlayed) { bgMusic.volume = 0.4; bgMusic.play().then(() => { musicPlayed = true; }).catch(e => {}); }
             }
 
-            // ================= ระบบแคนวาสเวทมนตร์ =================
             const canvas = document.getElementById('stardustCanvas'); 
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
@@ -311,7 +315,6 @@
             let particles = [];
             let shootingStar = null;
 
-            // ระบบเปิดประตูสู่ดินแดนสวรรค์ (โหลดและเล่นเพลง + หน่วงเวลาแก้ค้าง)
             const loader = document.getElementById('loadingScreen');
             function unlockRealm() {
                 playMagicMusic();
@@ -320,15 +323,12 @@
                     if (audioCtx.state === 'suspended') audioCtx.resume();
                 } catch(e) {}
 
-                // เฟดหน้าจอโหลดออก
                 loader.style.opacity = '0';
                 
-                // ให้เวลาเครื่องประมวลผล 0.3 วิ แล้วยิงดาวตกนำทางแบบสโลว์โมชั่น!
                 setTimeout(() => {
                     spawnFirstMajesticStar();
                 }, 300);
 
-                // รอ 1.2 วินาที (ให้ดาวตกวิ่งผ่านก่อน) แล้วค่อยแสดงเว็บขึ้นมาแบบสมูทๆ
                 setTimeout(() => { 
                     loader.style.display = 'none'; 
                     document.getElementById('mainContainer').classList.add('loaded');
@@ -374,26 +374,24 @@
             }
             window.addEventListener('mousemove', handleInteraction); window.addEventListener('touchmove', handleInteraction, {passive: true});
 
-            // ดาวตกนำทางดวงแรก (ช้าและอลังการ)
             function spawnFirstMajesticStar() {
                 shootingStar = {
-                    x: canvas.width * 0.2 + (Math.random() * 100), // โผล่จากด้านบนค่อนไปทางซ้าย
+                    x: canvas.width * 0.2 + (Math.random() * 100),
                     y: 0,
-                    length: 120, // หางยาวมาก
-                    speed: 7, // ช้ากว่าปกติครึ่งนึง เพื่อให้มองเห็นชัดเจน!
+                    length: 120, 
+                    speed: 7, 
                     angle: Math.PI / 4 + 0.05,
                     opacity: 1
                 };
             }
 
-            // ดาวตกปกติ
             function spawnShootingStar() {
                 if (Math.random() < 0.002 && !shootingStar) { 
                     shootingStar = {
                         x: Math.random() * canvas.width,
                         y: 0,
                         length: Math.random() * 80 + 60,
-                        speed: Math.random() * 12 + 15, // เร็วปกติ
+                        speed: Math.random() * 12 + 15,
                         angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1),
                         opacity: 1
                     };
@@ -423,7 +421,7 @@
 
                 shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
                 shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
-                shootingStar.opacity -= 0.01; // จางช้าลงนิดนึง
+                shootingStar.opacity -= 0.01; 
                 if (shootingStar.opacity <= 0 || shootingStar.y > canvas.height) shootingStar = null;
             }
 
@@ -431,7 +429,6 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
                 spawnStardust();
-                // ดาวตกปกติจะเริ่มทำงานหลังจากเว็บโหลดสมบูรณ์แล้ว
                 if(document.getElementById('mainContainer').classList.contains('loaded')){
                     spawnShootingStar();
                 }
@@ -460,7 +457,6 @@
             }
             animateMagic();
 
-            // ================= ปลดล็อกระบบลับ (วาดเลข 8) =================
             let tapCount = 0;
             document.getElementById('profileImg').addEventListener('click', () => {
                 tapCount++; if (tapCount === 2) { openGesture(); tapCount = 0; }
@@ -497,7 +493,6 @@
             dCanvas.addEventListener('mousedown', startDraw); dCanvas.addEventListener('mousemove', drawMove); dCanvas.addEventListener('mouseup', stopDraw);
             dCanvas.addEventListener('touchstart', startDraw, {passive: false}); dCanvas.addEventListener('touchmove', drawMove, {passive: false}); dCanvas.addEventListener('touchend', stopDraw);
 
-            // ================= แผง Admin =================
             const adminPanel = document.getElementById('adminPanel'); const adminLinksArea = document.getElementById('adminLinksArea');
 
             function openAdmin() {

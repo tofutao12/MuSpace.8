@@ -28,38 +28,38 @@
     </script>
     
     <style>
-        /* ================= ธีมเทพนิยายเวทมนตร์ หรูหรา มีมิติ ================= */
+        /* ================= โทนสีสว่าง ละมุนตา (Light Ethereal Theme) ================= */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Prompt', sans-serif; 
-            background: #190c2b; /* ปรับพื้นหลังให้เข้มขึ้นเล็กน้อยเพื่อให้แสงดาวและปุ่มคริสตัลโดดเด่น */
-            color: #f3e6ff;
+            background: #fcf9ff; 
+            color: #5a3a7c;
             min-height: 100vh; display: flex; justify-content: center;
             overflow-x: hidden; overscroll-behavior-y: none;
         }
         
         .bg-gradient {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(135deg, #2b124c, #4a2175, #1f0a38, #36175c);
-            background-size: 400% 400%; animation: gradientBG 15s ease infinite; z-index: -2;
+            background: linear-gradient(135deg, #f3e6ff, #e2c2f0, #fcf9ff, #e8d0f5);
+            background-size: 400% 400%; animation: gradientBG 20s ease infinite; z-index: -2;
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* แคนวาสละอองดาววิบวับแบบ Custom */
+        /* แคนวาสละอองดาวแฉกวิบวับ */
         #stardustCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 100; }
 
         .container {
             width: 100%; max-width: 480px; padding: 20px; text-align: center;
             position: relative; z-index: 1; min-height: 100vh;
-            background: rgba(25, 12, 43, 0.45); backdrop-filter: blur(10px);
-            box-shadow: 0 0 50px rgba(100, 40, 150, 0.4);
-            opacity: 0; transition: opacity 1.5s ease-in-out;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(180, 140, 220, 0.2);
+            opacity: 0; transition: opacity 1.2s ease-in-out;
         }
 
         .banner {
             width: 100%; height: 240px; border-radius: 25px; margin-bottom: -70px;
-            box-shadow: 0 15px 35px rgba(160, 100, 220, 0.4); 
-            border: 2px solid rgba(226, 194, 240, 0.5);
+            box-shadow: 0 15px 35px rgba(160, 100, 220, 0.25); 
+            border: 3px solid rgba(255, 255, 255, 0.7);
             position: relative; overflow: hidden; transform: translateZ(0);
         }
         .banner-bg {
@@ -71,103 +71,96 @@
 
         .profile-img {
             width: 150px; height: 150px; border-radius: 50%; 
-            border: 4px solid #e2c2f0;
+            border: 5px solid rgba(255, 255, 255, 0.9);
             object-fit: cover; position: relative; z-index: 5;
-            box-shadow: 0 0 30px #b983d6, inset 0 0 20px rgba(255,255,255,0.8);
+            box-shadow: 0 10px 30px rgba(160, 32, 240, 0.3), inset 0 0 20px rgba(255,255,255,1);
             cursor: pointer; transition: transform 0.3s;
         }
         .profile-img:active { transform: scale(0.95); }
 
-        /* ================= ชื่อเว็บอลังการ เรืองแสงเวทมนตร์ ================= */
+        /* ================= ชื่อเว็บหรูหรา สีสว่างละมุน ================= */
         .title { 
             font-family: 'Cinzel', serif; font-size: 34px; margin-top: 15px; 
-            background: linear-gradient(135deg, #fff, #f3e6ff, #d8b8eb, #ffd700);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 25px rgba(216, 184, 235, 0.6);
+            color: #7b4397; 
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
             letter-spacing: 1.5px;
-            animation: titleGlow 4s ease-in-out infinite alternate;
         }
-        @keyframes titleGlow {
-            0% { filter: drop-shadow(0 0 5px rgba(185, 131, 214, 0.5)); }
-            100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
-        }
-
         .subtitle { 
-            font-size: 14px; color: #e2c2f0; margin-bottom: 30px; 
-            letter-spacing: 2px; font-weight: 300;
-            text-shadow: 0 0 10px rgba(185, 131, 214, 0.8);
+            font-size: 14px; color: #8a63a8; margin-bottom: 30px; 
+            letter-spacing: 1.5px; font-weight: 400;
         }
 
-        /* ================= ปุ่มคริสตัลแก้วเรืองแสง ================= */
+        /* ================= ปุ่มคริสตัลแก้วสว่างสดใส ================= */
         .links-container { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 5; }
         .link-btn {
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, rgba(74, 33, 117, 0.6), rgba(43, 18, 76, 0.8));
-            border: 2px solid rgba(226, 194, 240, 0.4); padding: 18px 20px; border-radius: 35px;
-            color: #fff; text-decoration: none; font-size: 16px; font-weight: 600;
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4), inset 0 0 15px rgba(185, 131, 214, 0.2);
+            background: rgba(255, 255, 255, 0.65);
+            border: 2px solid rgba(255, 255, 255, 0.9); padding: 18px 20px; border-radius: 35px;
+            color: #5f337c; text-decoration: none; font-size: 16px; font-weight: 600;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(160, 32, 240, 0.1), inset 0 0 15px rgba(255,255,255,0.8);
             position: relative; overflow: hidden; animation: breathing 4s infinite ease-in-out alternate;
             transition: all 0.3s ease;
         }
         .link-btn::after {
             content: ''; position: absolute; top: -50%; left: -100%;
-            width: 50%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            width: 50%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
             transform: skewX(-30deg); transition: 0.6s ease;
         }
         .link-btn:hover::after { left: 150%; }
         .link-btn:hover { 
-            border-color: #ffd700; background: linear-gradient(135deg, rgba(95, 43, 124, 0.8), rgba(64, 26, 112, 0.9));
-            box-shadow: 0 0 30px rgba(216, 184, 235, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.4); 
-            transform: translateY(-4px) scale(1.02); color: #fff;
+            border-color: #d8b8eb; background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 25px rgba(226, 194, 240, 0.8); 
+            transform: translateY(-3px) scale(1.02); color: #7b4397;
         }
         .link-btn:nth-child(even) { animation-delay: 1s; } .link-btn:nth-child(3n) { animation-delay: 2s; }
         @keyframes breathing { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
 
+        /* หน้าจอโหลดสีสว่างละมุน */
         #loadingScreen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #190c2b;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fcf9ff;
             z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
         .magic-circle {
-            width: 100px; height: 100px; border: 4px dashed #b983d6; border-radius: 50%;
-            animation: spin 3s linear infinite; box-shadow: 0 0 30px #b983d6;
+            width: 90px; height: 90px; border: 4px dashed #c09cd4; border-radius: 50%;
+            animation: spin 3s linear infinite; box-shadow: 0 0 25px rgba(192, 156, 212, 0.5);
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         #gestureOverlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 5, 25, 0.95);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(252, 249, 255, 0.95);
             z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; transition: opacity 0.5s; backdrop-filter: blur(10px);
         }
-        #gestureOverlay h2 { color: #f3e6ff; font-family: 'Cinzel'; margin-bottom: 20px; text-shadow: 0 0 15px #b983d6; }
-        #drawCanvas { border: 2px solid rgba(185, 131, 214, 0.4); border-radius: 20px; box-shadow: 0 0 30px rgba(185,131,214,0.4); background: rgba(0,0,0,0.4); cursor: crosshair; touch-action: none; }
+        #gestureOverlay h2 { color: #7b4397; font-family: 'Cinzel'; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        #drawCanvas { border: 2px solid rgba(192, 156, 212, 0.6); border-radius: 20px; box-shadow: 0 0 30px rgba(192,156,212,0.3); background: rgba(255,255,255,0.7); cursor: crosshair; touch-action: none; }
 
         #adminPanel {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.8); z-index: 9999; justify-content: center; align-items: center; padding: 15px;
+            background: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center; padding: 15px;
             opacity: 0; transition: opacity 0.5s; backdrop-filter: blur(5px);
         }
         .admin-box {
-            background: linear-gradient(135deg, #2b124c, #1f0a38); width: 100%; max-width: 400px; padding: 25px; 
-            border-radius: 20px; border: 3px solid #b983d6; max-height: 90vh; overflow-y: auto; text-align: left; 
-            box-shadow: 0 0 50px rgba(185, 131, 214, 0.5);
+            background: rgba(255, 255, 255, 0.95); width: 100%; max-width: 400px; padding: 25px; 
+            border-radius: 20px; border: 3px solid #d8b8eb; max-height: 90vh; overflow-y: auto; text-align: left; 
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
-        .admin-box h2 { color: #f3e6ff; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #4a2175; padding-bottom: 10px; }
+        .admin-box h2 { color: #7b4397; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #f3e6ff; padding-bottom: 10px; }
         .admin-group { margin-bottom: 12px; }
-        .admin-group label { display: block; font-size: 13px; color: #e2c2f0; margin-bottom: 4px; font-weight: 600;}
+        .admin-group label { display: block; font-size: 13px; color: #8a63a8; margin-bottom: 4px; font-weight: 600;}
         .admin-group input {
-            width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #b983d6; background: rgba(0,0,0,0.5);
-            color: #fff; font-family: 'Prompt'; outline: none; transition: 0.3s;
+            width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #e2c2f0; background: #fff;
+            color: #5a3a7c; font-family: 'Prompt'; outline: none; transition: 0.3s;
         }
-        .admin-group input:focus { border-color: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .admin-group input:focus { border-color: #b983d6; box-shadow: 0 0 10px rgba(185, 131, 214, 0.3); }
         .admin-btn {
-            width: 100%; padding: 12px; background: linear-gradient(90deg, #7b39b9, #b983d6); color: white;
+            width: 100%; padding: 12px; background: linear-gradient(90deg, #b983d6, #7b4397); color: white;
             border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s;
             font-family: 'Prompt';
         }
-        .admin-btn:hover { background: #ffd700; color: #1f0a38; box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-        .admin-btn.close-btn { background: transparent; border: 2px solid #ff6b6b; color: #ff6b6b; }
+        .admin-btn:hover { background: #d8b8eb; color: #5a3a7c; box-shadow: 0 5px 15px rgba(123, 67, 151, 0.3); }
+        .admin-btn.close-btn { background: #fff; border: 2px solid #ff6b6b; color: #ff6b6b; }
     </style>
 </head>
 <body>
@@ -175,10 +168,10 @@
 
     <div id="loadingScreen">
         <div class="magic-circle"></div>
-        <p style="color: #e2c2f0; margin-top: 20px; font-family: 'Cinzel';">Summoning Magic...</p>
+        <p style="color: #7b4397; margin-top: 20px; font-family: 'Cinzel';">Summoning Magic...</p>
     </div>
 
-    <!-- แคนวาสละอองดาววิบวับแบบแฉกและประกายแสง -->
+    <!-- แคนวาสละอองดาวแฉกวิบวับ -->
     <canvas id="stardustCanvas"></canvas>
 
     <div class="container" id="mainContainer">
@@ -211,7 +204,7 @@
             <div class="admin-group"><label>Banner Image File</label><input type="text" id="adminBanImg"></div>
             <div class="admin-group"><label>Title</label><input type="text" id="adminTitle"></div>
             <div class="admin-group"><label>Subtitle</label><input type="text" id="adminSubtitle"></div>
-            <h3 style="color:#e2c2f0; font-size:14px; margin: 15px 0 5px; border-bottom: 1px solid #4a2175; padding-bottom:5px;">🔗 Links Settings</h3>
+            <h3 style="color:#7b4397; font-size:14px; margin: 15px 0 5px; border-bottom: 1px solid #f3e6ff; padding-bottom:5px;">🔗 Links Settings</h3>
             <div id="adminLinksArea"></div>
             <button class="admin-btn" onclick="saveAdminData()">💾 บันทึกเวทมนตร์ (Save Config)</button>
             <button class="admin-btn close-btn" onclick="closeAdmin()">❌ ปิดตำรา</button>
@@ -221,12 +214,12 @@
     <script>
         try {
             let currentData = defaultWebConfig;
-            if (localStorage.getItem('ahtao_magic_v2')) { currentData = JSON.parse(localStorage.getItem('ahtao_magic_v2')); }
+            if (localStorage.getItem('ahtao_magic_v3')) { currentData = JSON.parse(localStorage.getItem('ahtao_magic_v3')); }
 
             function renderSite() {
                 document.getElementById('profileImg').src = currentData.profileImage;
                 document.getElementById('bannerBg').style.backgroundImage = `url('${currentData.bannerImage}')`;
-                document.getElementById('siteTitle энергети'] = document.getElementById('siteTitle').innerText = currentData.siteTitle;
+                document.getElementById('siteTitle').innerText = currentData.siteTitle;
                 document.getElementById('siteSubtitle').innerText = currentData.siteSubtitle;
                 
                 const linksContainer = document.getElementById('linksContainer');
@@ -251,44 +244,45 @@
             window.addEventListener('click', playMagicMusic, { once: true });
             window.addEventListener('scroll', playMagicMusic, { once: true });
 
+            // ป้องกันหน้าจอโหลดค้าง
             window.addEventListener('load', () => {
                 setTimeout(() => {
-                    document.getElementById('loadingScreen').style.opacity = '0';
+                    const loader = document.getElementById('loadingScreen');
+                    loader.style.opacity = '0';
                     setTimeout(() => { 
-                        document.getElementById('loadingScreen').style.display = 'none'; 
+                        loader.style.display = 'none'; 
                         document.getElementById('mainContainer').style.opacity = '1';
-                    }, 1000);
-                }, 800);
+                    }, 800);
+                }, 500);
             });
 
-            // ================= ระบบประกายดาววิบวับแบบ Custom Canvas =================
+            // ================= ระบบประกายดาวแฉกวิบวับ (โทนสว่าง) =================
             const canvas = document.getElementById('stardustCanvas'); 
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; 
             canvas.height = window.innerHeight; 
             
             let sparkles = [];
-            for(let i=0; i<45; i++) {
+            for(let i=0; i<40; i++) {
                 sparkles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 3 + 1,
+                    size: Math.random() * 2.5 + 1,
                     alpha: Math.random(),
                     speedAlpha: Math.random() * 0.02 + 0.005,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: -Math.random() * 0.5 - 0.1
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: -Math.random() * 0.4 - 0.1
                 });
             }
 
             window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-            // วาดประกายดาวแฉก 4 แฉก
             function drawSparkle(x, y, size, alpha) {
                 ctx.save();
                 ctx.translate(x, y);
-                ctx.fillStyle = `rgba(255, 240, 255, ${alpha})`;
-                ctx.shadowColor = "#ffd700";
-                ctx.shadowBlur = 10;
+                ctx.fillStyle = `rgba(130, 80, 180, ${alpha * 0.8})`;
+                ctx.shadowColor = "#d8b8eb";
+                ctx.shadowBlur = 8;
                 
                 ctx.beginPath();
                 ctx.moveTo(0, -size * 2);
@@ -305,9 +299,9 @@
                     x: x, y: y,
                     size: Math.random() * 3 + 1.5,
                     alpha: 1,
-                    speedAlpha: 0.03,
-                    vx: (Math.random() - 0.5) * 1.5,
-                    vy: (Math.random() - 0.5) * 1.5
+                    speedAlpha: 0.04,
+                    vx: (Math.random() - 0.5) * 1,
+                    vy: (Math.random() - 0.5) * 1
                 });
             }
             window.addEventListener('mousemove', (e) => { if(Math.random()<0.3) addSparkle(e.clientX, e.clientY); });
@@ -316,15 +310,15 @@
             function animateSparkles() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                if(sparkles.length < 60 && Math.random() < 0.2) {
+                if(sparkles.length < 55 && Math.random() < 0.2) {
                     sparkles.push({
                         x: Math.random() * canvas.width,
                         y: canvas.height + 10,
-                        size: Math.random() * 2.5 + 1,
+                        size: Math.random() * 2 + 1,
                         alpha: 0,
                         speedAlpha: Math.random() * 0.02 + 0.005,
-                        vx: (Math.random() - 0.5) * 0.3,
-                        vy: -Math.random() * 0.6 - 0.2
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: -Math.random() * 0.5 - 0.1
                     });
                 }
 
@@ -373,7 +367,7 @@
             function drawMove(e) {
                 if (!isDrawing) return; e.preventDefault(); let rect = dCanvas.getBoundingClientRect();
                 let currentPos = { x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top };
-                dCtx.lineWidth = 6; dCtx.strokeStyle = "#ffd700"; dCtx.shadowColor = "#b983d6"; dCtx.shadowBlur = 15;
+                dCtx.lineWidth = 6; dCtx.strokeStyle = "#7b4397"; dCtx.shadowColor = "#d8b8eb"; dCtx.shadowBlur = 10;
                 dCtx.beginPath(); dCtx.moveTo(lastPos.x, lastPos.y); dCtx.lineTo(currentPos.x, currentPos.y); dCtx.stroke();
                 pathLength += Math.hypot(currentPos.x - lastPos.x, currentPos.y - lastPos.y); lastPos = currentPos;
             }
@@ -414,7 +408,7 @@
                     currentData.links[key].text = document.getElementById(`t_${key}`).value;
                     currentData.links[key].url = document.getElementById(`u_${key}`).value;
                 }
-                localStorage.setItem('ahtao_magic_v2', JSON.stringify(currentData));
+                localStorage.setItem('ahtao_magic_v3', JSON.stringify(currentData));
                 renderSite(); closeAdmin(); alert("✨ บันทึกเวทมนตร์เรียบร้อยแล้ว!");
             }
             window.closeGesture = closeGesture; window.closeAdmin = closeAdmin;

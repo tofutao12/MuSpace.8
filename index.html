@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ahtao Muspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script>
         // ================= ตำราเวทมนตร์ (ตั้งค่าเริ่มต้น) =================
@@ -17,18 +17,18 @@
             siteSubtitle: "✨ ผู้เปิดประตูสู่พรสวรรค์และความโชคดี ✨",
 
             links: {
-                tarot: { text: "🔮 เปิดไพ่ดูดวง", url: "#" },
-                reviews: { text: "📜 รีวิวจากลูกค้า", url: "#" },
-                discord: { text: "🎧 Discord", url: "#" },
-                facebook: { text: "📘 Facebook", url: "#" },
-                line: { text: "💬 LINE Official", url: "#" },
-                instagram: { text: "📸 Instagram", url: "#" }
+                tarot: { text: "☾ เปิดไพ่ดูดวง ☽", url: "https://ahtaomu8.pages.dev/" },
+                reviews: { text: "✧ รีวิวจากลูกค้า ✧", url: "https://credit12.pages.dev/" },
+                discord: { text: "✦ Discord ✦", url: "https://discord.gg/a79HuAJ5" },
+                facebook: { text: "⚜ Facebook ⚜", url: "https://www.facebook.com/profile.php?id=61594504356531" },
+                line: { text: "❦ LINE Official ❦", url: "https://lin.ee/YcGp09w" },
+                instagram: { text: "☼ Instagram ☼", url: "https://www.instagram.com/artaoty2?stkn=d3g4Nm1hNGR0Zmh5&utm_source=qr" }
             }
         };
     </script>
     
     <style>
-        /* ================= โทนสีสว่าง ละมุนตา (Light Ethereal Theme) ================= */
+        /* ================= โทนสีสว่าง ละมุนตา ================= */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Prompt', sans-serif; 
@@ -45,22 +45,23 @@
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        #stardustCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 100; }
+        /* แคนวาสเวทมนตร์ (อยู่หลังกระจก) */
+        #stardustCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; }
 
-        /* กล่องหลักแบบกระจกใสเวทมนตร์ (ลอยขึ้นตอนเปิดตัว) */
+        /* ================= กระจกฝ้าเวทมนตร์ ================= */
         .container {
             width: 100%; max-width: 480px; padding: 20px; text-align: center;
             position: relative; z-index: 1; min-height: 100vh;
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px); /* เพิ่มฝ้ากระจกให้ละมุนขึ้น */
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 0 50px rgba(180, 140, 220, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            opacity: 0; transform: translateY(40px);
-            transition: opacity 1.8s ease-out, transform 1.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: rgba(255, 255, 255, 0.25); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 0 50px rgba(180, 140, 220, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 2s ease-in-out, transform 2s ease-out;
         }
         .container.loaded { opacity: 1; transform: translateY(0); }
 
-        /* ================= แบนเนอร์เวทมนตร์ (จำลอง GIF) ================= */
+        /* ================= แบนเนอร์ออริจินัล ================= */
         .banner {
             width: 100%; height: 240px; border-radius: 25px; margin-bottom: -70px;
             box-shadow: 0 15px 35px rgba(160, 100, 220, 0.25); 
@@ -84,32 +85,31 @@
         .orb3 { width: 8px; height: 8px; top: 40%; left: 20%; animation-duration: 5s; }
         @keyframes floatOrb { 0% { transform: translateY(0) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
 
-        /* ================= โปรไฟล์ ออร่าหายใจ ================= */
+        /* ================= ออร่าหายใจรอบโปรไฟล์ ================= */
         .profile-img {
             width: 150px; height: 150px; border-radius: 50%; 
             border: 5px solid rgba(255, 255, 255, 0.9);
             object-fit: cover; position: relative; z-index: 5;
-            box-shadow: 0 0 15px rgba(185, 131, 214, 0.4), inset 0 0 20px rgba(255,255,255,1);
+            box-shadow: 0 0 15px rgba(185, 131, 214, 0.3), inset 0 0 20px rgba(255,255,255,1);
             cursor: pointer; transition: transform 0.3s;
-            animation: profileAura 4s infinite alternate ease-in-out;
+            animation: breathingAura 4s infinite alternate ease-in-out;
         }
         .profile-img:active { transform: scale(0.95); }
-        @keyframes profileAura { 100% { box-shadow: 0 0 35px rgba(185, 131, 214, 0.7), inset 0 0 20px rgba(255,255,255,1); } }
+        @keyframes breathingAura { 100% { box-shadow: 0 0 35px rgba(185, 131, 214, 0.6), inset 0 0 20px rgba(255,255,255,1); } }
 
-        /* ================= ข้อความ แสงสะท้อนประกายมุก ================= */
+        /* ================= ชื่อเว็บสะท้อนแสงมุก ================= */
         .title { 
             font-family: 'Cinzel', serif; font-size: 34px; margin-top: 15px; 
-            background: linear-gradient(120deg, #7b4397 0%, #7b4397 40%, #e2c2f0 50%, #7b4397 60%, #7b4397 100%);
+            background: linear-gradient(110deg, #7b4397 0%, #7b4397 40%, #d8b8eb 50%, #7b4397 60%, #7b4397 100%);
             background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: transparent; -webkit-background-clip: text; background-clip: text;
             animation: shimmerTitle 4s linear infinite;
-            text-shadow: 0 0 15px rgba(255,255,255,0.5); 
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
         @keyframes shimmerTitle { to { background-position: 200% center; } }
-        .subtitle { font-size: 15px; color: #8a63a8; margin-bottom: 30px; letter-spacing: 1px; font-weight: 400; text-shadow: 0 0 8px rgba(255,255,255,0.8); }
+        .subtitle { font-size: 15px; color: #8a63a8; margin-bottom: 30px; letter-spacing: 1px; font-weight: 400; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
 
-        /* ================= ปุ่มคริสตัลหายใจ ================= */
+        /* ================= ปุ่มคริสตัลดั้งเดิม ================= */
         .links-container { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 5; }
         .link-btn {
             display: flex; align-items: center; justify-content: center;
@@ -119,33 +119,33 @@
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 8px 20px rgba(160, 32, 240, 0.1), inset 0 0 15px rgba(255,255,255,0.8);
             position: relative; overflow: hidden; animation: breathing 4s infinite ease-in-out alternate;
+            transition: all 0.3s;
         }
         .link-btn::after {
             content: ''; position: absolute; top: -50%; left: -100%;
             width: 50%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
             transform: skewX(-30deg); transition: 0.6s ease;
         }
-        .link-btn:hover::after, .link-btn:active::after { left: 150%; }
-        .link-btn:hover, .link-btn:active { 
+        .link-btn:hover::after { left: 150%; }
+        .link-btn:hover { 
             border-color: #d8b8eb; box-shadow: 0 0 25px rgba(226, 194, 240, 0.6); 
             transform: translateY(-3px) scale(1.02); color: #7b4397;
         }
         .link-btn:nth-child(even) { animation-delay: 1s; } .link-btn:nth-child(3n) { animation-delay: 2s; }
         @keyframes breathing { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
 
-        /* ================= Loading Screen เทพนิยาย ================= */
+        /* ================= หน้าโหลดมินิมอลเทพนิยาย ================= */
         #loadingScreen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fcf9ff;
-            z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 1s ease, visibility 1s ease, transform 1s ease;
+            z-index: 9999; display: flex; justify-content: center; align-items: center;
+            transition: opacity 1.5s ease;
         }
-        .magic-glow {
-            width: 80px; height: 80px; border-radius: 50%;
-            background: radial-gradient(circle, #e2c2f0 0%, transparent 70%);
-            box-shadow: 0 0 30px #d8b8eb, 0 0 60px #e2c2f0;
-            animation: pulseGlow 2s infinite alternate;
+        .loading-text {
+            color: #7b4397; font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 2px;
+            animation: breatheText 2.5s infinite alternate ease-in-out;
+            text-shadow: 0 0 15px rgba(216, 184, 235, 0.8);
         }
-        @keyframes pulseGlow { 0% { transform: scale(0.8); opacity: 0.7; } 100% { transform: scale(1.3); opacity: 1; } }
+        @keyframes breatheText { 0% { opacity: 0.3; filter: blur(2px); } 100% { opacity: 1; filter: blur(0px); } }
 
         /* ================= ระบบวาดเวทมนตร์ (Gesture Lock - วาดเลข 8) ================= */
         #gestureOverlay {
@@ -156,7 +156,7 @@
         #gestureOverlay h2 { color: #7b4397; font-family: 'Cinzel'; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,255,255,1); }
         #drawCanvas { border: 2px solid rgba(192, 156, 212, 0.5); border-radius: 20px; box-shadow: 0 0 30px rgba(192,156,212,0.3); background: rgba(255,255,255,0.5); cursor: crosshair; touch-action: none; }
 
-        /* ================= Admin Panel ================= */
+        /* ================= แผง Admin ================= */
         #adminPanel {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px;
@@ -187,11 +187,12 @@
 <body>
     <div class="bg-gradient"></div>
 
+    <!-- หน้าจอโหลดคลีนๆ -->
     <div id="loadingScreen">
-        <div class="magic-glow"></div>
-        <p style="color: #7b4397; margin-top: 25px; font-family: 'Cinzel'; text-shadow: 0 0 10px #e2c2f0; letter-spacing: 2px;">Summoning Magic...</p>
+        <p class="loading-text">May the stars guide you...</p>
     </div>
 
+    <!-- แคนวาสดาวตกและละอองดาว -->
     <canvas id="stardustCanvas"></canvas>
 
     <div class="container" id="mainContainer">
@@ -221,7 +222,6 @@
     </div>
 
     <div id="adminPanel">
-        <!-- โครงสร้าง Admin คงเดิมทั้งหมด -->
         <div class="admin-box">
             <h2>📖 The Secret Grimoire</h2>
             <div class="admin-group"><label>Profile Image File</label><input type="text" id="adminProfImg"></div>
@@ -237,7 +237,7 @@
 
     <script>
         try {
-            // ระบบเสียงกระดิ่งลมเวทมนตร์สังเคราะห์ (ไม่ต้องใช้ไฟล์เสียงเพิ่ม)
+            // ระบบเสียงกระดิ่งลม (Fairy Chimes) แบบสังเคราะห์เบาๆ
             let audioCtx = null;
             function playFairyChime() {
                 try {
@@ -246,17 +246,19 @@
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(1200 + Math.random() * 600, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start(); osc.stop(audioCtx.currentTime + 1.5);
+                    osc.frequency.setValueAtTime(800 + Math.random() * 400, audioCtx.currentTime); // เสียงวิ้งแหลมใส
+                    gain.gain.setValueAtTime(0.02, audioCtx.currentTime); // เบามากๆ ไม่กวนหู
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.start(); osc.stop(audioCtx.currentTime + 1);
                 } catch(e) {}
             }
 
+            // จัดการข้อมูลเว็บไซต์
             let currentData = defaultWebConfig;
-            if (localStorage.getItem('ahtao_light_magic')) { currentData = JSON.parse(localStorage.getItem('ahtao_light_magic')); }
+            if (localStorage.getItem('ahtao_magic_grimoire_final')) { 
+                currentData = JSON.parse(localStorage.getItem('ahtao_magic_grimoire_final')); 
+            }
 
             function renderSite() {
                 document.getElementById('profileImg').src = currentData.profileImage;
@@ -270,18 +272,18 @@
                     const linkData = currentData.links[key];
                     const a = document.createElement('a');
                     a.href = linkData.url; a.className = 'link-btn'; a.innerText = linkData.text;
-                    // ฝังเสียงกระดิ่งลมเวทมนตร์เวลากด/แตะปุ่ม
-                    a.addEventListener('mousedown', playFairyChime);
+                    // เพิ่มเสียงกระดิ่งเวลาเอาเมาส์ชี้หรือแตะ
+                    a.addEventListener('mouseenter', playFairyChime);
                     a.addEventListener('touchstart', playFairyChime, {passive: true});
                     linksContainer.appendChild(a);
                 }
             }
             renderSite();
 
+            // เพลงบรรเลง
             const bgMusic = document.getElementById('bgMusic');
             document.getElementById('musicSource').src = currentData.musicFile;
             bgMusic.load(); let musicPlayed = false;
-            
             function playMagicMusic() {
                 if (!musicPlayed) { bgMusic.volume = 0.4; bgMusic.play().then(() => { musicPlayed = true; }).catch(e => {}); }
             }
@@ -289,31 +291,30 @@
             window.addEventListener('click', playMagicMusic, { once: true });
             window.addEventListener('scroll', playMagicMusic, { once: true });
 
-            // เปิดตัวสไตล์เทพนิยาย (Loader สลายตัว + Container ลอยขึ้น)
+            // อนิเมชั่นหน้าจอโหลดสไตล์คลีน
             window.addEventListener('load', () => {
                 setTimeout(() => {
                     const loader = document.getElementById('loadingScreen');
-                    loader.style.transform = 'scale(1.2)';
                     loader.style.opacity = '0';
-                    createParticleBurst(); // ระเบิดผงดาวตอนโหลดเสร็จ
                     setTimeout(() => { 
                         loader.style.display = 'none'; 
                         document.getElementById('mainContainer').classList.add('loaded');
-                    }, 800);
-                }, 1200);
+                    }, 1500);
+                }, 2000); // โชว์ข้อความ 2 วินาทีแล้วเฟดออก
             });
 
-            // ================= ระบบละอองดาว (ผสมจุดกลม + ดาวแฉก ลอยขึ้นช้าๆ) ลื่นไหลไม่ค้าง =================
-            const canvas = document.getElementById('stardustCanvas'); const ctx = canvas.getContext('2d');
+            // ================= ระบบแคนวาสเวทมนตร์ (ดาวตก & ละอองดาว) =================
+            const canvas = document.getElementById('stardustCanvas'); 
+            const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
-            let particles = [];
             window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-            // วาดดาว 4 แฉก
+            // 1. ดาววิบวับลอยเอื่อยๆ (Twinkling Stardust)
+            let particles = [];
             function drawCrossStar(x, y, size, alpha) {
                 ctx.save(); ctx.translate(x, y);
                 ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-                ctx.shadowColor = "#e2c2f0"; ctx.shadowBlur = 5;
+                ctx.shadowColor = "#e2c2f0"; ctx.shadowBlur = 6;
                 ctx.beginPath();
                 for(let i=0; i<4; i++) {
                     ctx.rotate(Math.PI / 2);
@@ -323,58 +324,85 @@
                 ctx.fill(); ctx.restore();
             }
 
-            // สร้างละอองดาวพื้นหลัง
-            function createBackgroundStardust() {
-                if(particles.length < 50 && Math.random() < 0.2) {
-                    const isStar = Math.random() > 0.7; // 30% เป็นดาวแฉก 70% เป็นจุดกลม
+            function spawnStardust() {
+                if(particles.length < 40 && Math.random() < 0.05) { // ลดความหนาแน่นลง ให้ดูคลีน
+                    const isStar = Math.random() > 0.6; 
                     particles.push({ 
                         x: Math.random() * canvas.width, 
-                        y: canvas.height + 20, 
-                        size: isStar ? Math.random() * 3 + 2 : Math.random() * 2 + 0.5, 
-                        speedX: (Math.random() - 0.5) * 0.5, 
-                        speedY: -Math.random() * 0.8 - 0.2, // ลอยขึ้นช้าๆ
+                        y: Math.random() * canvas.height, 
+                        size: isStar ? Math.random() * 2 + 1.5 : Math.random() * 1.5 + 0.5, 
+                        speedX: (Math.random() - 0.5) * 0.2, // ขยับซ้ายขวานิดเดียว
+                        speedY: (Math.random() - 0.5) * 0.2, // ขยับขึ้นลงนิดเดียว (เอื่อยๆ)
                         life: 0,
-                        maxLife: Math.random() * 0.5 + 0.3,
-                        fadeSpeed: 0.005 + Math.random() * 0.01,
-                        isStar: isStar
+                        maxLife: Math.random() * 0.4 + 0.2,
+                        fadeSpeed: 0.002 + Math.random() * 0.003, // สว่าง/จาง ช้ามากๆ
+                        isStar: isStar,
+                        fading: false
                     });
                 }
             }
 
-            // ละอองดาวตามปลายนิ้ว (ของเดิม)
-            function addParticle(x, y) {
-                particles.push({ x: x, y: y, size: Math.random() * 3 + 1, speedX: (Math.random() - 0.5) * 2, speedY: (Math.random() - 0.5) * 2, life: 1, maxLife: 1, fadeSpeed: 0.02, isStar: false });
-            }
+            // ละอองดาวเวลาเอานิ้วลาก (จากโค้ดเดิม)
             function handleInteraction(e) {
                 let x = e.touches ? e.touches[0].clientX : e.clientX; let y = e.touches ? e.touches[0].clientY : e.clientY;
-                for(let i=0; i<2; i++) addParticle(x, y);
+                particles.push({ x: x, y: y, size: Math.random() * 2 + 1, speedX: (Math.random() - 0.5) * 1, speedY: (Math.random() - 0.5) * 1, life: 1, maxLife: 1, fadeSpeed: 0.015, isStar: false, fading: true });
             }
             window.addEventListener('mousemove', handleInteraction); window.addEventListener('touchmove', handleInteraction, {passive: true});
 
-            // เอฟเฟกต์ระเบิดผงดาวตอนเข้าเว็บ
-            function createParticleBurst() {
-                for(let i=0; i<40; i++) {
-                    particles.push({
-                        x: canvas.width / 2, y: canvas.height / 2,
-                        size: Math.random() * 3 + 1,
-                        speedX: (Math.random() - 0.5) * 10, speedY: (Math.random() - 0.5) * 10,
-                        life: 1, maxLife: 1, fadeSpeed: 0.015, isStar: Math.random() > 0.5
-                    });
+            // 2. ดาวตกแห่งความโชคดี (Lucky Shooting Star)
+            let shootingStar = null;
+            function spawnShootingStar() {
+                // สุ่มเกิดเรื่อยๆ
+                if (Math.random() < 0.002 && !shootingStar) { 
+                    shootingStar = {
+                        x: Math.random() * canvas.width,
+                        y: 0,
+                        length: Math.random() * 60 + 40,
+                        speed: Math.random() * 10 + 15, // วิ่งเร็ว
+                        angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1), // เฉียงลงขวา
+                        opacity: 1
+                    };
                 }
             }
 
-            function drawParticles() {
+            function drawShootingStar() {
+                if (!shootingStar) return;
+                ctx.save();
+                ctx.beginPath();
+                let endX = shootingStar.x - Math.cos(shootingStar.angle) * shootingStar.length;
+                let endY = shootingStar.y - Math.sin(shootingStar.angle) * shootingStar.length;
+                ctx.moveTo(shootingStar.x, shootingStar.y);
+                ctx.lineTo(endX, endY);
+                
+                // หัวดาวตกสว่าง หางจางหาย
+                let grad = ctx.createLinearGradient(shootingStar.x, shootingStar.y, endX, endY);
+                grad.addColorStop(0, `rgba(255, 255, 255, ${shootingStar.opacity})`);
+                grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                
+                ctx.strokeStyle = grad; ctx.lineWidth = 1.5; ctx.shadowColor = "#fff"; ctx.shadowBlur = 5; ctx.stroke(); ctx.restore();
+
+                shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed;
+                shootingStar.y += Math.sin(shootingStar.angle) * shootingStar.speed;
+                shootingStar.opacity -= 0.012; // ค่อยๆ จางลงระหว่างตก
+                if (shootingStar.opacity <= 0 || shootingStar.y > canvas.height) shootingStar = null;
+            }
+
+            function animateMagic() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                createBackgroundStardust();
+                
+                spawnStardust();
+                spawnShootingStar();
+                drawShootingStar();
 
                 for (let i = 0; i < particles.length; i++) {
                     let p = particles[i];
                     
-                    // ระบบสว่าง-จาง (Fade In/Out) สำหรับดาวที่ลอยฉากหลัง
-                    if(p.speedY < -0.2 && p.speedY > -1.1) {
-                        if (p.life < p.maxLife && !p.fading) { p.life += p.fadeSpeed; if(p.life >= p.maxLife) p.fading = true; } 
-                        else { p.life -= p.fadeSpeed; }
-                    } else { p.life -= p.fadeSpeed; } // ดาวที่เกิดจากนิ้วจะจางไปเลย
+                    if (!p.fading) {
+                        p.life += p.fadeSpeed;
+                        if (p.life >= p.maxLife) p.fading = true;
+                    } else {
+                        p.life -= p.fadeSpeed;
+                    }
 
                     if(p.isStar) {
                         drawCrossStar(p.x, p.y, p.size, Math.max(0, p.life));
@@ -382,24 +410,24 @@
                         ctx.fillStyle = `rgba(185, 131, 214, ${Math.max(0, p.life)})`; 
                         ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
                     }
-                    
                     p.x += p.speedX; p.y += p.speedY;
                 }
-                particles = particles.filter(p => p.life > 0 && p.y > -20); requestAnimationFrame(drawParticles);
+                particles = particles.filter(p => p.life > 0); 
+                requestAnimationFrame(animateMagic);
             }
-            drawParticles();
+            animateMagic();
 
+            // Parallax Banner
             const bannerBg = document.getElementById('bannerBg');
             window.addEventListener('scroll', () => { bannerBg.style.transform = `translateY(${window.scrollY * 0.25}px) scale(1.05)`; }, {passive: true});
 
-            // ปลดล็อกระบบลับ (เคาะรูป 2 ครั้ง)
+            // ================= ปลดล็อกระบบลับ (วาดเลข 8) =================
             let tapCount = 0;
             document.getElementById('profileImg').addEventListener('click', () => {
                 tapCount++; if (tapCount === 2) { openGesture(); tapCount = 0; }
                 setTimeout(() => { tapCount = 0; }, 1000);
             });
 
-            // วาดเลข 8
             const gestureOverlay = document.getElementById('gestureOverlay');
             const dCanvas = document.getElementById('drawCanvas'); const dCtx = dCanvas.getContext('2d');
             let isDrawing = false; let pathLength = 0; let lastPos = {x:0, y:0};
@@ -430,7 +458,7 @@
             dCanvas.addEventListener('mousedown', startDraw); dCanvas.addEventListener('mousemove', drawMove); dCanvas.addEventListener('mouseup', stopDraw);
             dCanvas.addEventListener('touchstart', startDraw, {passive: false}); dCanvas.addEventListener('touchmove', drawMove, {passive: false}); dCanvas.addEventListener('touchend', stopDraw);
 
-            // แผง Admin
+            // ================= แผง Admin =================
             const adminPanel = document.getElementById('adminPanel'); const adminLinksArea = document.getElementById('adminLinksArea');
 
             function openAdmin() {
@@ -461,7 +489,7 @@
                     currentData.links[key].text = document.getElementById(`t_${key}`).value;
                     currentData.links[key].url = document.getElementById(`u_${key}`).value;
                 }
-                localStorage.setItem('ahtao_light_magic', JSON.stringify(currentData));
+                localStorage.setItem('ahtao_magic_grimoire_final', JSON.stringify(currentData));
                 renderSite(); closeAdmin(); alert("✨ บันทึกเวทมนตร์เรียบร้อยแล้ว!");
             }
             window.closeGesture = closeGesture; window.closeAdmin = closeAdmin;

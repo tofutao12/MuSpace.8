@@ -99,7 +99,7 @@
         .orb3 { width: 8px; height: 8px; top: 40%; left: 20%; animation-duration: 5s; }
         @keyframes floatOrb { 0% { transform: translateY(0) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
 
-        /* การแก้ไข: กรอบโปรไฟล์และรูปภาพ */
+        /* การแก้ไข: กรอบโปรไฟล์และรูปภาพแบบปรับลดขนาดแล้ว */
         .profile-wrapper {
             position: relative;
             width: 150px; 
@@ -128,13 +128,13 @@
 
         .profile-frame {
             position: absolute;
-            width: 195px; /* ขนาดกรอบคลุมรูปวงกลมพอดี */
-            height: 195px;
+            width: 155px; /* ปรับลดขนาดลงให้พอดีกับขอบรูปโปรไฟล์ */
+            height: 155px; 
             z-index: 10;
             pointer-events: none; 
             animation: floatFairyFrame 6s infinite alternate ease-in-out;
-            /* เพิ่มเวทมนตร์ปรับสี GIF ให้สว่างขึ้น ลบความหมอง และเพิ่มออร่าเรืองแสง */
-            filter: brightness(2) contrast(1.5) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+            /* ปรับแสงให้พอดี ไม่สว่างจ้าจนเกินไป */
+            filter: brightness(1.3) contrast(1.2) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
         }
 
         @keyframes floatFairyFrame {
@@ -251,12 +251,11 @@
             <div class="magic-orb orb3"></div>
         </div>
         
-        <!-- การแก้ไข: โครงสร้าง HTML สำหรับกรอบโปรไฟล์ -->
+        <!-- โครงสร้าง HTML สำหรับกรอบโปรไฟล์ -->
         <div class="profile-wrapper">
             <img src="" alt="Profile" class="profile-img" id="profileImg">
             <img src="fairy frame.gif" class="profile-frame">
         </div>
-        <!-- จบการแก้ไข: โครงสร้าง HTML สำหรับกรอบโปรไฟล์ -->
         
         <h1 class="title" id="siteTitle">Title</h1>
         <p class="subtitle" id="siteSubtitle">Subtitle</p>

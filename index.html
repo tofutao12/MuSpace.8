@@ -99,16 +99,48 @@
         .orb3 { width: 8px; height: 8px; top: 40%; left: 20%; animation-duration: 5s; }
         @keyframes floatOrb { 0% { transform: translateY(0) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
 
-        .profile-img {
-            width: 150px; height: 150px; border-radius: 50%; 
-            border: 5px solid rgba(255, 255, 255, 0.9);
-            object-fit: cover; position: relative; z-index: 5;
-            box-shadow: 0 0 15px rgba(185, 131, 214, 0.3), inset 0 0 20px rgba(255,255,255,1);
-            cursor: pointer; transition: transform 0.3s;
-            animation: breathingAura 4s infinite alternate ease-in-out;
+        /* การแก้ไข: กรอบโปรไฟล์และรูปภาพ */
+        .profile-wrapper {
+            position: relative;
+            width: 150px; 
+            height: 150px;
+            margin: 0 auto; 
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
+        .profile-img {
+            width: 130px; 
+            height: 130px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            position: absolute;
+            z-index: 2;
+            box-shadow: 0 0 15px rgba(185, 131, 214, 0.4), inset 0 0 10px rgba(255,255,255,1);
+            animation: breathingAura 4s infinite alternate ease-in-out;
+            cursor: pointer;
+        }
+        
         .profile-img:active { transform: scale(0.95); }
         @keyframes breathingAura { 100% { box-shadow: 0 0 35px rgba(185, 131, 214, 0.6), inset 0 0 20px rgba(255,255,255,1); } }
+
+        .profile-frame {
+            position: absolute;
+            width: 190px; 
+            height: 190px;
+            z-index: 10;
+            pointer-events: none; 
+            animation: floatFairyFrame 6s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 6px rgba(226, 194, 240, 0.8)); 
+        }
+
+        @keyframes floatFairyFrame {
+            0% { transform: scale(1) rotate(-3deg); }
+            100% { transform: scale(1.03) rotate(3deg); }
+        }
+        /* จบการแก้ไข: กรอบโปรไฟล์และรูปภาพ */
 
         .title { 
             font-family: 'Cinzel', serif; font-size: 34px; margin-top: 15px; 
@@ -218,7 +250,12 @@
             <div class="magic-orb orb3"></div>
         </div>
         
-        <img src="" alt="Profile" class="profile-img" id="profileImg">
+        <!-- การแก้ไข: โครงสร้าง HTML สำหรับกรอบโปรไฟล์ -->
+        <div class="profile-wrapper">
+            <img src="" alt="Profile" class="profile-img" id="profileImg">
+            <img src="fairy frame.gif" class="profile-frame">
+        </div>
+        <!-- จบการแก้ไข: โครงสร้าง HTML สำหรับกรอบโปรไฟล์ -->
         
         <h1 class="title" id="siteTitle">Title</h1>
         <p class="subtitle" id="siteSubtitle">Subtitle</p>

@@ -128,12 +128,13 @@
 
         .profile-frame {
             position: absolute;
-            width: 190px; 
-            height: 190px;
+            width: 195px; /* ขนาดกรอบคลุมรูปวงกลมพอดี */
+            height: 195px;
             z-index: 10;
             pointer-events: none; 
             animation: floatFairyFrame 6s infinite alternate ease-in-out;
-            filter: drop-shadow(0 0 6px rgba(226, 194, 240, 0.8)); 
+            /* เพิ่มเวทมนตร์ปรับสี GIF ให้สว่างขึ้น ลบความหมอง และเพิ่มออร่าเรืองแสง */
+            filter: brightness(2) contrast(1.5) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
         }
 
         @keyframes floatFairyFrame {
